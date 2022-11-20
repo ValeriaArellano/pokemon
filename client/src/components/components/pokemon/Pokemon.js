@@ -9,7 +9,7 @@ export const Pokemon = () => {
 
   useEffect(() => {
     async function detalles() {
-      const data = await fetch(`http://localhost:3001/pokemons/${id}`);
+      const data = await fetch(`https://pokemonnnnn.fly.dev/pokemons/${id}`);
       const pokemon = await data.json();
       setPokemon(pokemon);
     }

@@ -110,7 +110,7 @@ export const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const crear = await fetch("http://localhost:3001/pokemons", {
+    const crear = await fetch("https://pokemonnnnn.fly.dev/pokemons", {
       method: "POST",
       headers: {
         Accept: "application/json",
