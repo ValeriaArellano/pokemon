@@ -1,0 +1,155 @@
+@import "../../../styles/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .form {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    background-color: #f2f2f2;
+    border-radius: 40px;
+    margin-top: 30px;
+
+    @include breakpoint(sm) {
+      flex-direction: column;
+    }
+
+    &__inputs_container {
+      label {
+        padding: 4px 6px;
+        line-height: 190%;
+        outline-style: none;
+        transition: all 0.6s;
+      }
+
+      .question {
+        position: relative;
+        padding: 5px 0;
+
+        label {
+          font-weight: 100;
+          letter-spacing: 0.01em;
+          font-size: 17px;
+          font-weight: 700;
+        }
+
+        input {
+          appearance: none;
+          text-align: center;
+          background-color: none;
+          border: 1px solid rgb(243, 110, 27);
+          line-height: 0;
+          font-size: 17px;
+          width: 100%;
+          display: block;
+          box-sizing: border-box;
+          border-radius: 60px;
+          color: black;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+          z-index: 1;
+
+          &:focus {
+            outline: none;
+            background: $secondary;
+            color: white;
+          }
+        }
+
+        &:first-of-type {
+          padding-top: 0;
+        }
+
+        &:last-of-type {
+          padding-top: 0;
+        }
+      }
+
+      .danger {
+        input {
+          appearance: none;
+          text-align: center;
+          background-color: none;
+          border: 1px solid $secondary;
+          line-height: 0;
+          font-size: 17px;
+          width: 100%;
+          display: block;
+          box-sizing: border-box;
+          border-radius: 60px;
+          color: black;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+          z-index: 1;
+        }
+
+        label {
+          font-weight: 100;
+          letter-spacing: 0.01em;
+          font-size: 17px;
+          color: red;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .types_container{
+      width: 45%;
+      padding: 30px;
+
+      @include breakpoint(sm){
+        width: 100%;
+      }
+      .types {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+  
+        @include breakpoint(sm) {
+          flex-direction: column;
+          flex-wrap: nowrap;
+        
+        }
+  
+        input[type="checkbox"],
+        input[type="radio"] {
+          display: none;
+        }
+  
+        label {
+          cursor: pointer;
+          border-radius: 20px;
+        }
+  
+        input[type="checkbox"]:checked + label {
+          background: rgba(255, 133, 12, 0.698);
+        }
+  
+         input[type="checkbox"]:checked + label:hover {
+           background: rgba(253, 117, 6, 0.7);
+         }
+      }
+
+      .submit {
+        margin-top: 20px;
+        padding: 0.6em 0.8em;
+        width: 100px;
+        background-color: $secondary;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 40px;
+
+        @include breakpoint(sm){
+          align-self: center;
+        }
+      }
+    }
+  }
+}

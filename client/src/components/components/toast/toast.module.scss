@@ -1,0 +1,87 @@
+@import '../../../styles/variables.scss';
+
+.container {
+    font-size: 14px;
+    position: fixed;
+    z-index: 10;
+  }
+  
+  .buttom-right {
+    bottom: 1rem;
+    right: 1rem;
+    animation: toast-in-right .7s;
+
+    @include breakpoint(sm){
+        right: auto;
+        bottom: auto;
+        top: 1rem;
+    }
+  }
+  
+  .notification {
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #999;
+    color: #000;
+    opacity: 0.9;
+    transition: .3s ease;
+  }
+  
+  .notification:hover {
+    box-shadow: 0 0 12px #fff;
+    opacity: 1;
+  }
+  
+  .toast {
+    height: 100px;
+    width: 365px;
+    color: #fff;
+    padding: 20px 15px 10px 10px;
+
+    @include breakpoint(sm){
+        width: 100vw;
+    }
+  }
+  
+  .container button {
+    float: right;
+    background: none;
+    border: none;
+    color: #fff;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 6px;
+    width: 300px;
+    height: 18px;
+
+    @include breakpoint(sm){
+        width: 100vw;
+        text-align: center;
+    }
+
+  }
+  
+  .description {
+    margin: 0;
+    text-align: left;
+
+    @include breakpoint(sm){
+        text-align: center;
+    }
+  }
+  
+  @keyframes toast-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+}

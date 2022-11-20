@@ -1,0 +1,42 @@
+@import '../../../styles/variables.scss';
+
+.container {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .field {
+    display: flex;
+    width: 100%;
+    input {
+      width: 100%;
+      padding: 0.6em;
+      border: 0.2em solid $secondary;
+      text-align: left;
+    }
+    
+    .button {
+      width: 70px;
+      font: 1.2em "Montserrat Alternates";
+    background-color: $secondary;
+    color: white;
+    cursor: pointer;
+    }
+  }
+  
+  .field2{
+    margin: 30px;
+    &__button {
+      margin: 7px;
+      padding: 0.6em 0.8em;
+      background-color: $secondary;
+      color: white;
+      border: none;
+      border-radius: 25px;
+
+      @include breakpoint(sm){
+        margin: 3px;
+      }
+    }
+  }
+   
