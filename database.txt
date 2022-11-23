@@ -1,0 +1,7 @@
+Postgres cluster pokemon14 created
+  Username:    postgres
+  Password:    ljXstEzotIG4P7X
+  Hostname:    pokemon14.internal
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:ljXstEzotIG4P7X@pokemon14.internal:5432

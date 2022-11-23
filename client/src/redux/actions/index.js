@@ -47,10 +47,10 @@ export const getTypes = () => async (dispatch) => {
     });
   };
   
-  export const order = (order) => (dispatch) => {
+  export const sort = (sort) => (dispatch) => {
     dispatch({
       type: "ORDER",
-      payload: order,
+      payload: sort,
     });
   };
   

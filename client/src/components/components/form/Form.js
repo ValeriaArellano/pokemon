@@ -28,22 +28,6 @@ export const Form = () => {
           backgroundColor: '#d9534f'
         }
         break;
-      case 'info':
-        toastProperties = {
-          id: list.length+1,
-          title: 'Info',
-          description: 'This is a info toast component',
-          backgroundColor: '#5bc0de'
-        }
-        break;
-      case 'warning':
-        toastProperties = {
-          id: list.length+1,
-          title: 'Warning',
-          description: 'This is a warning toast component',
-          backgroundColor: '#f0ad4e'
-        }
-        break;
       default:
         toastProperties = [];
     }
