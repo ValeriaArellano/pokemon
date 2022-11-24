@@ -4,6 +4,7 @@ import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
 import { useSelector } from "react-redux";
 import Toast from "../toast/Toast";
+import axios from 'axios';
 
 export const Pokemon = () => {
   const { id } = useParams();
