@@ -236,7 +236,7 @@ export const Pokemon = () => {
             <button onClick={() => setEdit(false)}>
               Cancel
             </button>
-            <button type="submit" onClick={(e) => saveChanges(e)}>
+            <button onClick={(e) => saveChanges(e)}>
               Save changes
             </button>
           </form>
