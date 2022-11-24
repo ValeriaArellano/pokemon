@@ -3,7 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
 import { useSelector } from "react-redux";
-import Toast from "../toast/toast";
+import Toast from "../toast/Toast";
+
 export const Pokemon = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState({});
