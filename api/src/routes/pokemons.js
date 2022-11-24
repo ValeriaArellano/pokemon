@@ -68,7 +68,8 @@ router.post("/", async (req, res) => {
   res.json({ info: "Pokemon created!" });
 });
 
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
   let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
     req.body;
   if (
@@ -80,7 +81,7 @@ router.put("/", async (req, res) => {
     isNaN(weight)
   )return res.json({ info: "Some features are not a number" });
 
-  const exists = await Pokemon.findOne({ where: { idPoke: idPoke } });
+  const exists = await Pokemon.findOne({ where: { idPoke: id } });
     console.log('exists: ', exists)
 
   const pokemon = await Pokemon.update({
