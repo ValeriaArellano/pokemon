@@ -85,8 +85,8 @@ export const Pokemon = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*'
       },
-      mode: 'cors',
       body: JSON.stringify(data),
     });
     const response = await edit.json();
