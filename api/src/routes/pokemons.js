@@ -68,4 +68,39 @@ router.post("/", async (req, res) => {
   res.json({ info: "Pokemon created!" });
 });
 
+router.put("/", async (req, res) => {
+  let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
+    req.body;
+  if (
+    isNaN(life) ||
+    isNaN(strength) ||
+    isNaN(defense) ||
+    isNaN(speed) ||
+    isNaN(height) ||
+    isNaN(weight)
+  )return res.json({ info: "Some features are not a number" });
+
+  if (!name) return res.json({ info: "The name is required" });
+
+  const pokemon = await Pokemon.update({
+    name: name.toLowerCase(),
+    life: Number(life),
+    strength: Number(strength),
+    defense: Number(defense),
+    speed: Number(speed),
+    height: Number(height),
+    weight: Number(weight),
+    img: img
+  },
+  { where: { idPoke: idPoke } }
+  );
+
+  if (!types.length) {
+    types = [1]
+  };
+
+  await pokemon.setTypes(types);
+  res.json({ info: "Pokemon edited!" });
+});
+
 module.exports = router

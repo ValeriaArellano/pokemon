@@ -34,15 +34,6 @@ export const Form = () => {
     setList([...list, toastProperties]);
   };
 
-  const validate = (input) => {
-    let errors = {};
-    if (!input.name) {
-      errors.name = "The name is required";
-    }
-
-    return errors;
-  };
-
   const [data, setData] = useState({
     name: "",
     life: 0,
@@ -145,7 +136,7 @@ export const Form = () => {
             <input
               type="number"
               name="life"
-              value={data.vida}
+              value={data.life}
               onChange={handleInputChange}
             />
           </p>
@@ -154,7 +145,7 @@ export const Form = () => {
             <input
               type="number"
               name="strength"
-              value={data.fuerza}
+              value={data.strength}
               onChange={handleInputChange}
             />
           </p>
@@ -163,7 +154,7 @@ export const Form = () => {
             <input
               type="number"
               name="defense"
-              value={data.defensa}
+              value={data.defense}
               onChange={handleInputChange}
             />
           </p>
@@ -172,7 +163,7 @@ export const Form = () => {
             <input
               type="number"
               name="speed"
-              value={data.velocidad}
+              value={data.speed}
               onChange={handleInputChange}
             />
           </p>
@@ -181,7 +172,7 @@ export const Form = () => {
             <input
               type="number"
               name="height"
-              value={data.altura}
+              value={data.height}
               onChange={handleInputChange}
             />
           </p>
@@ -190,7 +181,7 @@ export const Form = () => {
             <input
               type="number"
               name="weight"
-              value={data.peso}
+              value={data.weight}
               onChange={handleInputChange}
             />
           </p>
@@ -224,7 +215,7 @@ export const Form = () => {
             ))}
             
           </div>
-          <input type="submit" value="Crear" className={style.submit} />
+          <input type="submit" value="Create" className={style.submit} />
         </div>
       </form>
 
