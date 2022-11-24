@@ -25,7 +25,7 @@ export const Pokedex = () => {
 
   const nextPage = () => {
     if (pokemons.length > page + 12) {
-      setPage(page + 9);
+      setPage(page + 12);
     }
   };
 

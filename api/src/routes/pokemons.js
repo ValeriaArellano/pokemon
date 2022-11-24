@@ -15,12 +15,12 @@ router.get("/", async (req, res) => {
     name = name.toLowerCase();
     pokemonInfo = await forName(name);
     if (!pokemonInfo.length)
-      return res.json({ info: "No se encontro el pokemon" });
+      return res.json({ msg: "No se encontro el pokemon" });
     return res.json(pokemonInfo);
   }
 
   pokemonInfo = await info(by);
-  if (!pokemonInfo.length) return res.json({ info: "No hay mas registros" });
+  if (!pokemonInfo.length) return res.json({ msg: "No hay mas registros" });
 
   res.json(pokemonInfo);
 });
@@ -42,12 +42,12 @@ router.post("/", async (req, res) => {
     isNaN(speed) ||
     isNaN(height) ||
     isNaN(weight)
-  )return res.json({ info: "Alguno de los argumentos no es un numero" });
+  )return res.json({ info: "Some features are not a number" });
 
-  if (!name) return res.json({ info: "El nombre es obligatorio" });
+  if (!name) return res.json({ info: "The name is required" });
 
   const exists = await Pokemon.findOne({ where: { name: name } });
-  if (exists) return res.json({ info: "El pokemon ya existe" });
+  if (exists) return res.json({ info: "Pokemon already exists!" });
 
   const pokemon = await Pokemon.create({
     name: name.toLowerCase(),
@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
   };
 
   await pokemon.setTypes(types);
-  res.json({ info: "Pokemon created" });
+  res.json({ info: "Pokemon created!" });
 });
 
 module.exports = router
