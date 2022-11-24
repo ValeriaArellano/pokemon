@@ -117,7 +117,7 @@ export const Form = () => {
       img: ""
     });
 
-    if(respuesta.info === 'Pokemon created'){
+    if(respuesta.info === 'Pokemon created!'){
       showToast('success', respuesta.info)
     }else{
       showToast('danger', respuesta.info)
