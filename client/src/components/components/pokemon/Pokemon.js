@@ -24,6 +24,7 @@ export const Pokemon = () => {
     weight: 0,
     types: [],
     img: "",
+    idPoke: id
   });
 
   useEffect(() => {
