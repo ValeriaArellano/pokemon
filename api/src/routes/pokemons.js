@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
   res.json({ info: "Pokemon created!" });
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/edit/:id", async (req, res) => {
   const { id } = req.params;
   let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
     req.body;

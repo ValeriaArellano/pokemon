@@ -80,13 +80,8 @@ export const Pokemon = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    const edit = await fetch(`https://pokemonnnnn.fly.dev/pokemons/${id}`, {
+    const edit = await fetch(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
       method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": '*'
-      },
       body: JSON.stringify(data),
     });
     const response = await edit.json();
