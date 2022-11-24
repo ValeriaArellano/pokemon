@@ -48,12 +48,12 @@ export const Pokemon = () => {
           Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
       });
     } else {
-      setErrors(
-        validate({
-          ...data,
-          [e.target.name]: e.target.value,
-        })
-      );
+      // setErrors(
+      //   validate({
+      //     ...data,
+      //     [e.target.name]: e.target.value,
+      //   })
+      // );
       setData({
         ...data,
         [e.target.name]: e.target.value,
@@ -86,7 +86,7 @@ export const Pokemon = () => {
       },
       body: JSON.stringify(data),
     });
-    const respuesta = await crear.json();
+    const response = await edit.json();
     console.log(respuesta);
     setData({
       name: "",
@@ -101,10 +101,10 @@ export const Pokemon = () => {
       idPoke: id
     });
 
-    if(respuesta.info === 'Pokemon created!'){
-      showToast('success', respuesta.info)
+    if(response.info === 'Pokemon created!'){
+      showToast('success', response.info)
     }else{
-      showToast('danger', respuesta.info)
+      showToast('danger', response.info)
     }
   }
 

@@ -34,6 +34,15 @@ export const Form = () => {
     setList([...list, toastProperties]);
   };
 
+  // const validate = (input) => {
+  //   let errors = {};
+  //   if (!input.name) {
+  //     errors.name = "The name is required";
+  //   }
+
+  //   return errors;
+  // };
+
   const [data, setData] = useState({
     name: "",
     life: 0,
@@ -55,12 +64,12 @@ export const Form = () => {
         [e.target.name]: Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
       });
     } else {
-      setErrors(
-        validate({
-          ...data,
-          [e.target.name]: e.target.value,
-        })
-      );
+      // setErrors(
+      //   validate({
+      //     ...data,
+      //     [e.target.name]: e.target.value,
+      //   })
+      // );
       setData({
         ...data,
         [e.target.name]: e.target.value,
