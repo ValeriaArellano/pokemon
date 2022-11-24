@@ -47,7 +47,7 @@ export const Pokemon = () => {
       setData({
         ...data,
         [e.target.name]:
-          Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
+          Number(e.target.value) <= 0 ? 0 :e.target.value,
       });
     } else {
       // setErrors(
@@ -80,9 +80,8 @@ export const Pokemon = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    const edit = await fetch(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
+    const edit = await axios.PUT(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
+      data
     });
     const response = await edit.json();
     setData({

@@ -107,12 +107,12 @@ export const Form = () => {
     console.log(respuesta);
     setData({
       name: "",
-      life: 0,
-      strength: 0,
-      defense: 0,
-      speed: 0,
-      height: 0,
-      weight: 0,
+      life: '',
+      strength:'',
+      defense: '',
+      speed: '',
+      height: '',
+      weight: '',
       types: [],
       img: ""
     });

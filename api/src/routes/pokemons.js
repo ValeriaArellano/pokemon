@@ -70,39 +70,48 @@ router.post("/", async (req, res) => {
 
 router.put("/edit/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
     req.body;
-  if (
-    isNaN(life) ||
-    isNaN(strength) ||
-    isNaN(defense) ||
-    isNaN(speed) ||
-    isNaN(height) ||
-    isNaN(weight)
-  )return res.json({ info: "Some features are not a number" });
 
-  const exists = await Pokemon.findOne({ where: { idPoke: id } });
-    console.log('exists: ', exists)
+console.log(req.body)
+    try {
+      const exists = await Pokemon.findOne({ where: { idPoke: id } });
+      console.log('exists: ', exists)
 
-  const pokemon = await Pokemon.update({
-    name: name ? name.toLowerCase() : exists.name,
-    life: life ? Number(life) : exists.life,
-    strength: strength ? Number(strength) : exists.strength,
-    defense: defense ? Number(defense) : exists.defense,
-    speed: speed ? Number(speed) : exists.speed,
-    height: height ? Number(height) : exists.height,
-    weight: weight ? Number(weight) : exists.weight,
-    img: img ? img : exists.img
-  },
-  { where: { idPoke: idPoke } }
-  );
+      try {
+        const pokemon = await Pokemon.update({
+          name: name ? name.toLowerCase() : exists.name,
+          life: life ? Number(life) : exists.life,
+          strength: strength ? Number(strength) : exists.strength,
+          defense: defense ? Number(defense) : exists.defense,
+          speed: speed ? Number(speed) : exists.speed,
+          height: height ? Number(height) : exists.height,
+          weight: weight ? Number(weight) : exists.weight,
+          img: img ? img : exists.img
+        },
+        { where: { idPoke: idPoke } }
+        );
 
-  if (!types.length) {
-    types = [1]
-  };
+        if (!types.length) {
+          types = [1]
+        };
 
-  await pokemon.setTypes(types);
-  res.json({ info: "Pokemon edited!" });
+        await pokemon.setTypes(types);
+        res.json({ info: "Pokemon edited!" });
+      } catch (error) {
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  
+
+  
+
+  
+
+ 
 });
 
 module.exports = router
