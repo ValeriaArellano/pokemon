@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Toast from "../toast/Toast";
 import axios from 'axios';
+import { getPokemons } from "../../../redux/actions";
 
 export const Pokemon = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState({});
   const [edit, setEdit] = useState(false);
   const [changeImg, setChangeImg] = useState(false);
+  const dispatch = useDispatch();
 
   const options = useSelector((store) => store.types);
 
@@ -86,6 +88,7 @@ export const Pokemon = () => {
       console.log(response.data)
       if(response.data.info === 'Pokemon edited!'){
         showToast('success', response.data.info)
+        dispatch(getPokemons());
         setEdit(false)
       }else{
         showToast('danger', response.data.info)
