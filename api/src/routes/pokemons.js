@@ -69,29 +69,30 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/edit/:id", async (req, res) => {
-  console.log('entra?')
-  const { id } = req.params;
+
+    try {
+
+      const { id } = req.params;
   console.log(id)
   let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
     req.body;
 
-console.log(req.body)
-    try {
-      const exists = await Pokemon.findOne({ where: { idPoke: id } });
-      console.log('exists: ', exists)
+      const exists = await Pokemon.findOne({ where: { id: id } });
+      console.log(exists)
 
-      try {
-        const pokemon = await Pokemon.update({
+      console.log(req.body)
+
+       const pokemon = await Pokemon.update({
           name: name ? name.toLowerCase() : exists.name,
-          life: life ? Number(life) : exists.life,
-          strength: strength ? Number(strength) : exists.strength,
-          defense: defense ? Number(defense) : exists.defense,
-          speed: speed ? Number(speed) : exists.speed,
-          height: height ? Number(height) : exists.height,
-          weight: weight ? Number(weight) : exists.weight,
+          life: life ? parseInt(life) : exists.life,
+          strength: strength ? parseInt(strength) : exists.strength,
+          defense: defense ? parseInt(defense) : exists.defense,
+          speed: speed ? parseInt(speed) : exists.speed,
+          height: height ? parseInt(height) : exists.height,
+          weight: weight ? parseInt(weight) : exists.weight,
           img: img ? img : exists.img
         },
-        { where: { idPoke: idPoke } }
+        { where: { idPoke: id } }
         );
 
         if (!types.length) {
@@ -99,12 +100,10 @@ console.log(req.body)
         };
 
         await pokemon.setTypes(types);
-        res.status(200).json({ info: "Pokemon edited!", pokemon: pokemon });
-      } catch (error) {
-        console.log(error)
-      }
+        console.log(pokemon) 
+        res.status(200).json({ info: "Pokemon edited!", pokemon: pokemon})
     } catch (error) {
-      console.log(error)
+      res.status(400).json(error)
     }
   
 

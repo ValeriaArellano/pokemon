@@ -81,11 +81,11 @@ export const Pokemon = () => {
   };
 
   const saveChanges = async (e) => {
-    e.preventDefault();
     await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, data).then((response) => {
       console.log(response.data)
       if(response.data.info === 'Pokemon edited!'){
         showToast('success', response.data.info)
+        setEdit(false)
       }else{
         showToast('danger', response.data.info)
       }
@@ -101,6 +101,7 @@ export const Pokemon = () => {
         img: "",
         idPoke: id
       });
+      
     }
     ).catch(e => console.log(e.response))
    
@@ -224,12 +225,32 @@ export const Pokemon = () => {
             </div>
             <div className={style.meter}>
               <div className={style.type}>
-                <Stats valor={pokemon.life} nombre={"Life"} />
-                <Stats valor={pokemon.strength} nombre={"Strength"} />
+              <input
+              type="number"
+              name="life"
+              value={data.life}
+              onChange={e => handleInputChange(e)}
+            />
+                <input
+              type="number"
+              name="life"
+              value={data.strength}
+              onChange={e => handleInputChange(e)}
+            />
               </div>
               <div className={style.type}>
-                <Stats valor={pokemon.defense} nombre={"Defense"} />
-                <Stats valor={pokemon.speed} nombre={"Speed"} />
+              <input
+              type="number"
+              name="life"
+              value={data.defense}
+              onChange={e => handleInputChange(e)}
+            />
+            <input
+              type="number"
+              name="life"
+              value={data.speed}
+              onChange={e => handleInputChange(e)}
+            />
               </div>
             </div>
             <button onClick={() => setEdit(false)}>
