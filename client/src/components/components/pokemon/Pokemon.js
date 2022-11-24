@@ -81,7 +81,7 @@ export const Pokemon = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    const edit = await axios.PUT(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
+    const edit = await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
       data
     });
     const response = await edit.json();
