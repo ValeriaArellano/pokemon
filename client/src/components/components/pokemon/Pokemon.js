@@ -81,28 +81,32 @@ export const Pokemon = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    const edit = await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
+    await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
       data
-    });
-    const response = await edit.json();
-    setData({
-      name: "",
-      life: '',
-      strength: '',
-      defense: '',
-      speed: '',
-      height: '',
-      weight: '',
-      types: [],
-      img: "",
-      idPoke: id
-    });
-
-    if(response.info === 'Pokemon edited!'){
-      showToast('success', response.info)
-    }else{
-      showToast('danger', response.info)
+    }).then((response) => {
+      console.log(response.data)
+      if(response.data.info === 'Pokemon edited!'){
+        showToast('success', response.data.info)
+      }else{
+        showToast('danger', response.data.info)
+      }
+      setData({
+        name: "",
+        life: '',
+        strength: '',
+        defense: '',
+        speed: '',
+        height: '',
+        weight: '',
+        types: [],
+        img: "",
+        idPoke: id
+      });
     }
+    ).catch(e => console.log(e.response.data))
+   
+
+    
   }
 
   const [list, setList] = useState([]);
