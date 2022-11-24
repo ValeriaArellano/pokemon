@@ -87,7 +87,6 @@ export const Pokemon = () => {
       body: JSON.stringify(data),
     });
     const response = await edit.json();
-    console.log(respuesta);
     setData({
       name: "",
       life: 0,
@@ -101,12 +100,39 @@ export const Pokemon = () => {
       idPoke: id
     });
 
-    if(response.info === 'Pokemon created!'){
+    if(response.info === 'Pokemon edited!'){
       showToast('success', response.info)
     }else{
       showToast('danger', response.info)
     }
   }
+
+  const [list, setList] = useState([]);
+  let toastProperties = null;
+  const showToast = (type, description) => {
+    switch(type) {
+      case 'success':
+        toastProperties = {
+          id: list.length+1,
+          title: 'Success',
+          description: description,
+          backgroundColor: '#5cb85c'
+        }
+        break;
+      case 'danger':
+        toastProperties = {
+          id: list.length+1,
+          title: 'Error',
+          description: description,
+          backgroundColor: '#d9534f'
+        }
+        break;
+      default:
+        toastProperties = [];
+    }
+    setList([...list, toastProperties]);
+  };
+
 
   return (
     <>
@@ -120,7 +146,7 @@ export const Pokemon = () => {
                 name="name"
                 value={data.name}
                 placeholder={pokemon.name}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div className={style.img}>
@@ -130,7 +156,7 @@ export const Pokemon = () => {
                     type="text"
                     name="img"
                     value={data.img}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e)}
                   />
                 ) : null}
                 <img
@@ -152,7 +178,7 @@ export const Pokemon = () => {
                     name="weight"
                     value={data.weight}
                     placeholder={pokemon.weight}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e)}
                   />
                   kg
                 </p>
@@ -163,7 +189,7 @@ export const Pokemon = () => {
                     name="weight"
                     value={data.height}
                     placeholder={pokemon.height}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e)}
                   />
                   ft
                 </p>
@@ -180,7 +206,7 @@ export const Pokemon = () => {
                         name={t.name}
                         value={t.slot}
                         id={t.slot}
-                        onChange={checkbox}
+                        onChange={(e) => checkbox(e)}
                       />
                       <label htmlFor={t.slot}>{t.name}</label>
                       {t.slot % 4 === 0 ? <br /> : null}
@@ -212,6 +238,7 @@ export const Pokemon = () => {
               Save changes
             </button>
           </form>
+          <Toast toastlist={list} position="buttom-right" setList={setList} />
         </>
       ) : (
         <>
