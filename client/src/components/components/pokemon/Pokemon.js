@@ -81,6 +81,7 @@ export const Pokemon = () => {
   };
 
   const saveChanges = async (e) => {
+    e.preventDefault()
     await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, data).then((response) => {
       console.log(response.data)
       if(response.data.info === 'Pokemon edited!'){
@@ -233,7 +234,7 @@ export const Pokemon = () => {
             />
                 <input
               type="number"
-              name="life"
+              name="strength"
               value={data.strength}
               onChange={e => handleInputChange(e)}
             />
@@ -241,13 +242,13 @@ export const Pokemon = () => {
               <div className={style.type}>
               <input
               type="number"
-              name="life"
+              name="defense"
               value={data.defense}
               onChange={e => handleInputChange(e)}
             />
             <input
               type="number"
-              name="life"
+              name="speed"
               value={data.speed}
               onChange={e => handleInputChange(e)}
             />
