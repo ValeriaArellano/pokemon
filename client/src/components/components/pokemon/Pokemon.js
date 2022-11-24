@@ -86,17 +86,18 @@ export const Pokemon = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      mode: 'cors',
       body: JSON.stringify(data),
     });
     const response = await edit.json();
     setData({
       name: "",
-      life: 0,
-      strength: 0,
-      defense: 0,
-      speed: 0,
-      height: 0,
-      weight: 0,
+      life: '',
+      strength: '',
+      defense: '',
+      speed: '',
+      height: '',
+      weight: '',
       types: [],
       img: "",
       idPoke: id
@@ -188,7 +189,7 @@ export const Pokemon = () => {
                   altura:{" "}
                   <input
                     type="number"
-                    name="weight"
+                    name="height"
                     value={data.height}
                     placeholder={pokemon.height}
                     onChange={(e) => handleInputChange(e)}

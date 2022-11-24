@@ -80,17 +80,18 @@ router.put("/", async (req, res) => {
     isNaN(weight)
   )return res.json({ info: "Some features are not a number" });
 
-  if (!name) return res.json({ info: "The name is required" });
+  const exists = await Pokemon.findOne({ where: { idPoke: idPoke } });
+    console.log('exists: ', exists)
 
   const pokemon = await Pokemon.update({
-    name: name.toLowerCase(),
-    life: Number(life),
-    strength: Number(strength),
-    defense: Number(defense),
-    speed: Number(speed),
-    height: Number(height),
-    weight: Number(weight),
-    img: img
+    name: name ? name.toLowerCase() : exists.name,
+    life: life ? Number(life) : exists.life,
+    strength: strength ? Number(strength) : exists.strength,
+    defense: defense ? Number(defense) : exists.defense,
+    speed: speed ? Number(speed) : exists.speed,
+    height: height ? Number(height) : exists.height,
+    weight: weight ? Number(weight) : exists.weight,
+    img: img ? img : exists.img
   },
   { where: { idPoke: idPoke } }
   );
