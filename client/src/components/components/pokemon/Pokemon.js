@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
 import { useSelector } from "react-redux";
+import Toast from "../toast/toast";
 export const Pokemon = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState({});
@@ -76,7 +77,7 @@ export const Pokemon = () => {
     }
   };
 
-  const saveChanges = async () => {
+  const saveChanges = async (e) => {
     e.preventDefault();
     const edit = await fetch("https://pokemonnnnn.fly.dev/pokemons", {
       method: "PUT",
