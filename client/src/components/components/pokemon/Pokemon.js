@@ -81,9 +81,7 @@ export const Pokemon = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, {
-      data
-    }).then((response) => {
+    await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, data).then((response) => {
       console.log(response.data)
       if(response.data.info === 'Pokemon edited!'){
         showToast('success', response.data.info)
@@ -103,7 +101,7 @@ export const Pokemon = () => {
         idPoke: id
       });
     }
-    ).catch(e => console.log(e.response.data))
+    ).catch(e => console.log(e.response))
    
 
     

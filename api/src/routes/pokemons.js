@@ -69,6 +69,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/edit/:id", async (req, res) => {
+  console.log('entra?')
   const { id } = req.params;
   console.log(id)
   let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
@@ -98,7 +99,7 @@ console.log(req.body)
         };
 
         await pokemon.setTypes(types);
-        res.json({ info: "Pokemon edited!" });
+        res.status(200).json({ info: "Pokemon edited!", pokemon: pokemon });
       } catch (error) {
         console.log(error)
       }
