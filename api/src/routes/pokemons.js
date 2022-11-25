@@ -98,4 +98,5 @@ router.delete("/:id", async (req, res) => {
     return res.status(400).json({ info: "Error when deleting" });
   }
 });
+
 module.exports = router;
