@@ -169,7 +169,6 @@ export const Pokemon = () => {
               <div onClick={() => setChangeImg(true)} style={{cursor: 'pointer', display: 'flex', flexDirection: 'column'}}>
                 {changeImg ? (
                   <input
-                  style={style.img__input}
                     type="text"
                     name="img"
                     value={data.img}
