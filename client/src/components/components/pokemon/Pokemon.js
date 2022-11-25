@@ -166,9 +166,10 @@ export const Pokemon = () => {
               />
             </div>
             <div className={style.img}>
-              <button onClick={() => setChangeImg(true)}>
+              <div onClick={() => setChangeImg(true)} style={{cursor: 'pointer', display: 'flex', flexDirection: 'column'}}>
                 {changeImg ? (
                   <input
+                  style={style.img__input}
                     type="text"
                     name="img"
                     value={data.img}
@@ -185,7 +186,7 @@ export const Pokemon = () => {
                   }
                   alt="pokemon"
                 />
-              </button>
+              </div>
               <div className={style.parrafo}>
                 <p>
                   peso:{" "}
