@@ -118,7 +118,7 @@ export const Pokemon = () => {
   const saveChanges = async (e) => {
     e.preventDefault();
     await axios
-      .put(`http://localhost:8080/pokemons/${id}`, data)
+      .put(`https://pokemonnnnn.fly.dev/pokemons/${id}`, data)
       .then((response) => {
         console.log(response.data);
         if (response.data.info === "Pokemon edited!") {
