@@ -28,21 +28,13 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const pokemonInfo = await forId(id);
-  if (!pokemonInfo.id) return res.json( "No se encontro el pokemon" );
+  if (!pokemonInfo.id) return res.json("No se encontro el pokemon");
   res.json(pokemonInfo);
 });
 
 router.post("/", async (req, res) => {
   let { name, life, strength, defense, speed, height, weight, types, img } =
     req.body;
-  if (
-    isNaN(life) ||
-    isNaN(strength) ||
-    isNaN(defense) ||
-    isNaN(speed) ||
-    isNaN(height) ||
-    isNaN(weight)
-  )return res.json({ info: "Some features are not a number" });
 
   if (!name) return res.json({ info: "The name is required" });
 
@@ -57,61 +49,53 @@ router.post("/", async (req, res) => {
     speed: Number(speed),
     height: Number(height),
     weight: Number(weight),
-    img: img
+    img: img,
   });
 
   if (!types.length) {
-    types = [1]
-  };
+    types = [1];
+  }
 
   await pokemon.setTypes(types);
-  res.json({ info: "Pokemon created!" });
+  return res.json({ info: "Pokemon created!" });
 });
 
-router.put("/edit/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    let { name, life, strength, defense, speed, height, weight, types, img } =
+      req.body;
 
-    try {
+    const exists = await Pokemon.findByPk(id);
 
-      const { id } = req.params;
-  let { name, life, strength, defense, speed, height, weight, types, img } =
-    req.body;
-
-      const exists = await Pokemon.findOne({ where: { id: id } });
-
-      console.log(req.body)
-
-       const pokemon = await Pokemon.update({
-          name: name ? name.toLowerCase() : exists.name,
-          life: life ? parseInt(life) : exists.life,
-          strength: strength ? parseInt(strength) : exists.strength,
-          defense: defense ? parseInt(defense) : exists.defense,
-          speed: speed ? parseInt(speed) : exists.speed,
-          height: height ? parseInt(height) : exists.height,
-          weight: weight ? parseInt(weight) : exists.weight,
-          img: img ? img : exists.img
-        },
-        { where: { id: id } }
-        );
-
-        if (!types.length) {
-          types = [1]
-        }else{
-          console.log(types)
-          await pokemon.setTypes(types);
-        }
-
-        
-        res.status(200).json({ info: "Pokemon edited!", pokemon: pokemon})
-    } catch (error) {
-      res.status(400).json(error)
+    await exists.update({
+      name: name ? name : exists.name,
+      life: life ? parseInt(life) : exists.life,
+      strength: strength ? parseInt(strength) : exists.strength,
+      defense: defense ? parseInt(defense) : exists.defense,
+      speed: speed ? parseInt(speed) : exists.speed,
+      height: height ? parseInt(height) : exists.height,
+      weight: weight ? parseInt(weight) : exists.weight,
+      img: img ? img : exists.img,
+    });
+    if (!types.length) {
+      types = exists.types;
     }
-  
-
-  
-
-  
-
- 
+    await exists.setTypes(types);
+    return res.status(200).json({ info: "Pokemon edited!" });
+  } catch (error) {
+    return res.status(400).json({ info: "Error when editing" });
+  }
 });
 
-module.exports = router
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pokemonToDelete = await Pokemon.findByPk(id);
+    pokemonToDelete.destroy();
+    return res.status(200).json({ info: "Pokemon deleted!" });
+  } catch (error) {
+    return res.status(400).json({ info: "Error when deleting" });
+  }
+});
+module.exports = router;

@@ -45,12 +45,12 @@ export const Form = () => {
 
   const [data, setData] = useState({
     name: "",
-    life: 0,
-    strength: 0,
-    defense: 0,
-    speed: 0,
-    height: 0,
-    weight: 0,
+    life: '',
+    strength: '',
+    defense: '',
+    speed: '',
+    height: '',
+    weight: '',
     types: [],
     img: ""
   });
@@ -94,7 +94,7 @@ export const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const crear = await fetch("https://pokemonnnnn.fly.dev/pokemons", {
+    const crear = await fetch("http://localhost:3001/pokemons", {
       method: "POST",
       headers: {
         Accept: "application/json",

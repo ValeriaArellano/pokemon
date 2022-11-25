@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
 import { useSelector, useDispatch } from "react-redux";
 import Toast from "../toast/Toast";
-import axios from 'axios';
-import { getPokemons } from "../../../redux/actions";
+import axios from "axios";
 
 export const Pokemon = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState({});
   const [edit, setEdit] = useState(false);
   const [changeImg, setChangeImg] = useState(false);
-  const dispatch = useDispatch();
-
+  const history = useHistory();
   const options = useSelector((store) => store.types);
 
   const [data, setData] = useState({
@@ -26,7 +24,6 @@ export const Pokemon = () => {
     weight: 0,
     types: [],
     img: "",
-    idPoke: id
   });
 
   useEffect(() => {
@@ -40,9 +37,25 @@ export const Pokemon = () => {
 
   const editPokemon = () => {
     if (Number(id)) {
-      return alert("This pokemon can't be deleted");
+      return alert("This pokemon can't be edited");
     } else {
       setEdit(true);
+    }
+  };
+
+  const deletePokemon = () => {
+    if (Number(id)) {
+      return alert("This pokemon can't be deleted");
+    } else {
+      axios.delete(`https://pokemonnnnn.fly.dev/pokemons/${id}`).then((response) => {
+        console.log(response.data);
+        if (response.data.info === "Pokemon deleted!") {
+          showToast("success", response.data.info);
+          history.push("/home");
+        } else {
+          showToast("danger", response.data.info);
+        }
+      });
     }
   };
 
@@ -50,8 +63,7 @@ export const Pokemon = () => {
     if (e.target.name !== "name" && e.target.name !== "img") {
       setData({
         ...data,
-        [e.target.name]:
-          Number(e.target.value) <= 0 ? 0 :e.target.value,
+        [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
       });
     } else {
       // setErrors(
@@ -83,61 +95,59 @@ export const Pokemon = () => {
   };
 
   const saveChanges = async (e) => {
-    e.preventDefault()
-    await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, data).then((response) => {
-      console.log(response.data)
-      // if(response.data.info === 'Pokemon edited!'){
-      //   showToast('success', response.data.info)
-      //   dispatch(getPokemons());
-      //   setEdit(false)
-      // }else{
-      //   showToast('danger', response.data.info)
-      // }
-      setData({
-        name: "",
-        life: '',
-        strength: '',
-        defense: '',
-        speed: '',
-        height: '',
-        weight: '',
-        types: [],
-        img: ""
-      });
-      setEdit(false)
-    }
-    ).catch(e => console.log(e.response))
-   
-
-    
-  }
+    e.preventDefault();
+    await axios
+      .put(`https://pokemonnnnn.fly.dev/pokemons/${id}`, data)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.info === "Pokemon edited!") {
+          showToast("success", response.data.info);
+          setEdit(false);
+          window.location.reload();
+        } else {
+          showToast("danger", response.data.info);
+        }
+        setData({
+          name: "",
+          life: "",
+          strength: "",
+          defense: "",
+          speed: "",
+          height: "",
+          weight: "",
+          types: [],
+          img: "",
+        });
+        setEdit(false);
+      })
+      .catch((e) => console.log(e.response.data));
+  };
 
   const [list, setList] = useState([]);
   let toastProperties = null;
   const showToast = (type, description) => {
-    switch(type) {
-      case 'success':
+    switch (type) {
+      case "success":
         toastProperties = {
-          id: list.length+1,
-          title: 'Success',
+          id: list.length + 1,
+          title: "Success",
           description: description,
-          backgroundColor: '#5cb85c'
-        }
+          backgroundColor: "#5cb85c",
+        };
         break;
-      case 'danger':
+      case "danger":
         toastProperties = {
-          id: list.length+1,
-          title: 'Error',
+          id: list.length + 1,
+          title: "Error",
           description: description,
-          backgroundColor: '#d9534f'
-        }
+          backgroundColor: "#d9534f",
+        };
         break;
       default:
         toastProperties = [];
     }
     setList([...list, toastProperties]);
   };
-
 
   return (
     <>
@@ -155,7 +165,7 @@ export const Pokemon = () => {
               />
             </div>
             <div className={style.img}>
-              <Link onClick={() => setChangeImg(true)}>
+              <button onClick={() => setChangeImg(true)}>
                 {changeImg ? (
                   <input
                     type="text"
@@ -174,7 +184,7 @@ export const Pokemon = () => {
                   }
                   alt="pokemon"
                 />
-              </Link>
+              </button>
               <div className={style.parrafo}>
                 <p>
                   peso:{" "}
@@ -228,40 +238,36 @@ export const Pokemon = () => {
             </div>
             <div className={style.meter}>
               <div className={style.type}>
-              <input
-              type="number"
-              name="life"
-              value={data.life}
-              onChange={e => handleInputChange(e)}
-            />
                 <input
-              type="number"
-              name="strength"
-              value={data.strength}
-              onChange={e => handleInputChange(e)}
-            />
+                  type="number"
+                  name="life"
+                  value={data.life}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                <input
+                  type="number"
+                  name="strength"
+                  value={data.strength}
+                  onChange={(e) => handleInputChange(e)}
+                />
               </div>
               <div className={style.type}>
-              <input
-              type="number"
-              name="defense"
-              value={data.defense}
-              onChange={e => handleInputChange(e)}
-            />
-            <input
-              type="number"
-              name="speed"
-              value={data.speed}
-              onChange={e => handleInputChange(e)}
-            />
+                <input
+                  type="number"
+                  name="defense"
+                  value={data.defense}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                <input
+                  type="number"
+                  name="speed"
+                  value={data.speed}
+                  onChange={(e) => handleInputChange(e)}
+                />
               </div>
             </div>
-            <button onClick={() => setEdit(false)}>
-              Cancel
-            </button>
-            <button onClick={(e) => saveChanges(e)}>
-              Save changes
-            </button>
+            <button onClick={() => setEdit(false)}>Cancel</button>
+            <button onClick={(e) => saveChanges(e)}>Save changes</button>
           </form>
           <Toast toastlist={list} position="buttom-right" setList={setList} />
         </>
@@ -304,6 +310,7 @@ export const Pokemon = () => {
               </div>
             </div>
             <button onClick={() => editPokemon()}>Edit</button>
+            <button onClick={() => deletePokemon()}>Delete</button>
           </div>
         </>
       )}
