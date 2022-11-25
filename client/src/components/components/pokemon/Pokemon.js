@@ -141,7 +141,7 @@ export const Pokemon = () => {
         });
         setEdit(false);
       })
-      .catch((e) => showToast("danger", e.response.data.info));
+      .catch((e) => showToast("danger", e));
   };
 
   
