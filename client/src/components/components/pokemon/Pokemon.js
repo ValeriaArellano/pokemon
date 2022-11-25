@@ -154,9 +154,10 @@ export const Pokemon = () => {
       {edit ? (
         <>
           <form className={style.container}>
-            <div>
-              <h1>#{pokemon.id}</h1>
+            <div style={style.name_container}>
+              <h1 style={style.name_container__h1}>#{pokemon.id}</h1>
               <input
+                style={style.name_container__input_name}
                 type="text"
                 name="name"
                 value={data.name}
