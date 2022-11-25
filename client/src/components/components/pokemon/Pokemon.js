@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import style from "./pokemon.module.scss";
 import Stats from "../../components/stats/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Toast from "../toast/Toast";
 import axios from "axios";
 
@@ -16,112 +16,16 @@ export const Pokemon = () => {
 
   const [data, setData] = useState({
     name: "",
-    life: 0,
-    strength: 0,
-    defense: 0,
-    speed: 0,
-    height: 0,
-    weight: 0,
+    life: '',
+    strength: '',
+    defense: '',
+    speed: '',
+    height: '',
+    weight: '',
     types: [],
     img: "",
   });
 
-  useEffect(() => {
-    async function detalles() {
-      const data = await fetch(`https://pokemonnnnn.fly.dev/pokemons/${id}`);
-      const pokemon = await data.json();
-      setPokemon(pokemon);
-    }
-    detalles();
-  }, [id]);
-
-  const editPokemon = () => {
-    if (Number(id)) {
-      return alert("This pokemon can't be edited");
-    } else {
-      setEdit(true);
-    }
-  };
-
-  const deletePokemon = () => {
-    if (Number(id)) {
-      return alert("This pokemon can't be deleted");
-    } else {
-      axios.delete(`https://pokemonnnnn.fly.dev/pokemons/${id}`).then((response) => {
-        console.log(response.data);
-        if (response.data.info === "Pokemon deleted!") {
-          showToast("success", response.data.info);
-          history.push("/home");
-        } else {
-          showToast("danger", response.data.info);
-        }
-      });
-    }
-  };
-
-  const handleInputChange = (e) => {
-    if (e.target.name !== "name" && e.target.name !== "img") {
-      setData({
-        ...data,
-        [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
-      });
-    } else {
-      // setErrors(
-      //   validate({
-      //     ...data,
-      //     [e.target.name]: e.target.value,
-      //   })
-      // );
-      setData({
-        ...data,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
-
-  const checkbox = (e) => {
-    if (data.types.includes(e.target.value)) {
-      data.types = data.types.filter((id) => id !== e.target.value);
-      setData({
-        ...data,
-        types: data.types,
-      });
-    } else {
-      setData({
-        ...data,
-        types: [...data.types, e.target.value],
-      });
-    }
-  };
-
-  const saveChanges = async (e) => {
-    e.preventDefault();
-    await axios
-      .put(`https://pokemonnnnn.fly.dev/pokemons/${id}`, data)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.info === "Pokemon edited!") {
-          showToast("success", response.data.info);
-          setEdit(false);
-          window.location.reload();
-        } else {
-          showToast("danger", response.data.info);
-        }
-        setData({
-          name: "",
-          life: "",
-          strength: "",
-          defense: "",
-          speed: "",
-          height: "",
-          weight: "",
-          types: [],
-          img: "",
-        });
-        setEdit(false);
-      })
-      .catch((e) => console.log(e.response.data));
-  };
 
   const [list, setList] = useState([]);
   let toastProperties = null;
@@ -149,6 +53,99 @@ export const Pokemon = () => {
     setList([...list, toastProperties]);
   };
 
+  useEffect(() => {
+    async function detalles() {
+      const data = await fetch(`https://pokemonnnnn.fly.dev/pokemons/${id}`);
+      const pokemon = await data.json();
+      setPokemon(pokemon);
+    }
+    detalles();
+  }, [id]);
+
+  const editPokemon = () => {
+    if (Number(id)) {
+      return alert("This pokemon can't be edited");
+    } else {
+      setEdit(true);
+    }
+  };
+
+  const deletePokemon = () => {
+    if (Number(id)) {
+      return alert("This pokemon can't be deleted");
+    } else {
+      axios.delete(`https://pokemonnnnn.fly.dev/pokemons/${id}`).then((response) => {
+        console.log(response.data);
+        if (response.data.info === "Pokemon deleted!") {
+          showToast("success", response.data.info);
+          history.push("/home");
+        }
+      }).catch(e=>{
+        showToast("danger", e.response.data.info);
+      });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    if (e.target.name !== "name" && e.target.name !== "img") {
+      setData({
+        ...data,
+        [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
+      });
+    } else {
+      setData({
+        ...data,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  const checkbox = (e) => {
+    if (data.types.includes(e.target.value)) {
+      data.types = data.types.filter((id) => id !== e.target.value);
+      setData({
+        ...data,
+        types: data.types,
+      });
+    } else {
+      setData({
+        ...data,
+        types: [...data.types, e.target.value],
+      });
+    }
+  };
+
+  const saveChanges = async (e) => {
+    e.preventDefault();
+    await axios
+      .put(`http://localhost:8080/pokemons/${id}`, data)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.info === "Pokemon edited!") {
+          showToast("success", response.data.info);
+          setEdit(false);
+          window.location.reload();
+        } 
+          
+        
+        setData({
+          name: "",
+          life: "",
+          strength: "",
+          defense: "",
+          speed: "",
+          height: "",
+          weight: "",
+          types: [],
+          img: "",
+        });
+        setEdit(false);
+      })
+      .catch((e) => showToast("danger", e.response.data.info));
+  };
+
+  
+
   return (
     <>
       {edit ? (
@@ -157,7 +154,7 @@ export const Pokemon = () => {
             <div className={style.name_container}>
               <h1 className={style.name_container__h1}>#{pokemon.id}</h1>
               <input
-                style={style.name_container__input_name}
+                className={style.name_container__input_name}
                 type="text"
                 name="name"
                 value={data.name}
@@ -166,16 +163,19 @@ export const Pokemon = () => {
               />
             </div>
             <div className={style.img}>
-              <div onClick={() => setChangeImg(true)} style={{cursor: 'pointer', display: 'flex', flexDirection: 'column'}}>
+              <div style={{marginTop: '15px',cursor: 'pointer', display: 'flex', flexDirection: 'column'}}>
                 {changeImg ? (
                   <input
+                  style={{backgroundColor: 'transparent'}}
                     type="text"
                     name="img"
+                    placeholder="image link"
                     value={data.img}
                     onChange={(e) => handleInputChange(e)}
                   />
                 ) : null}
                 <img
+                 onClick={() => setChangeImg(!changeImg)}
                   src={
                     data.img
                       ? data.img
@@ -188,23 +188,23 @@ export const Pokemon = () => {
               </div>
               <div className={style.parrafo}>
                 <p>
-                  peso:{" "}
+                  weight:
                   <input
+                  style={{backgroundColor: 'transparent', width: '30%'}}
                     type="number"
                     name="weight"
                     value={data.weight}
-                    placeholder={pokemon.weight}
                     onChange={(e) => handleInputChange(e)}
                   />
                   kg
                 </p>
                 <p>
-                  altura:{" "}
+                  height:
                   <input
+                  style={{backgroundColor: 'transparent', width: '30%'}}
                     type="number"
                     name="height"
                     value={data.height}
-                    placeholder={pokemon.height}
                     onChange={(e) => handleInputChange(e)}
                   />
                   ft
@@ -230,45 +230,55 @@ export const Pokemon = () => {
                   ))}
                 </div>
               </div>
-
-              {pokemon.type
-                ? pokemon?.type.map((t) => (
-                    <h3 className={style[`${t}`]}>{t}</h3>
-                  ))
-                : null}
             </div>
             <div className={style.meter}>
               <div className={style.type}>
+              <p>
+                  life:
                 <input
                   type="number"
                   name="life"
                   value={data.life}
                   onChange={(e) => handleInputChange(e)}
                 />
+                </p>
+                <p>
+                  strength:
                 <input
                   type="number"
                   name="strength"
                   value={data.strength}
                   onChange={(e) => handleInputChange(e)}
                 />
+                </p>
               </div>
               <div className={style.type}>
+              <p>
+                  defense:
                 <input
                   type="number"
                   name="defense"
                   value={data.defense}
                   onChange={(e) => handleInputChange(e)}
                 />
+                </p>
+                <p>
+                  speed:
                 <input
                   type="number"
                   name="speed"
                   value={data.speed}
                   onChange={(e) => handleInputChange(e)}
                 />
+                </p>
               </div>
+
+              <button onClick={() => setEdit(false)} className={style.buttons}>Cancel</button>
+            <button onClick={(e) => saveChanges(e)} className={style.buttons}>Save</button>
+
+             
             </div>
-            <button onClick={() => setEdit(false)}>Cancel</button>
-            <button onClick={(e) => saveChanges(e)}>Save changes</button>
+           
           </form>
           <Toast toastlist={list} position="buttom-right" setList={setList} />
         </>
@@ -310,8 +320,8 @@ export const Pokemon = () => {
                 <Stats valor={pokemon.speed} nombre={"Speed"} />
               </div>
             </div>
-            <button onClick={() => editPokemon()}>Edit</button>
-            <button onClick={() => deletePokemon()}>Delete</button>
+            <button onClick={() => editPokemon()} className={style.buttons}>Edit</button>
+            <button onClick={() => deletePokemon()} className={style.buttons}>Delete</button>
           </div>
         </>
       )}

@@ -34,15 +34,6 @@ export const Form = () => {
     setList([...list, toastProperties]);
   };
 
-  // const validate = (input) => {
-  //   let errors = {};
-  //   if (!input.name) {
-  //     errors.name = "The name is required";
-  //   }
-
-  //   return errors;
-  // };
-
   const [data, setData] = useState({
     name: "",
     life: '',
@@ -55,8 +46,6 @@ export const Form = () => {
     img: ""
   });
 
-  const [errors, setErrors] = useState({});
-
   const handleInputChange = (e) => {
     if (e.target.name !== "name" && e.target.name !== "img") {
       setData({
@@ -64,12 +53,6 @@ export const Form = () => {
         [e.target.name]: Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
       });
     } else {
-      // setErrors(
-      //   validate({
-      //     ...data,
-      //     [e.target.name]: e.target.value,
-      //   })
-      // );
       setData({
         ...data,
         [e.target.name]: e.target.value,
@@ -129,7 +112,7 @@ export const Form = () => {
       <form action="POST" className={style.form} onSubmit={submit}>
         <div className={style.form__inputs_container}>
           <h1>Create your own Pokemon</h1>
-          <p className={errors.name ? style.danger : style.question}>
+          <p className={style.question}>
             <label>Pokemon name</label>
             <input
               type="text"
@@ -139,7 +122,6 @@ export const Form = () => {
               required
             />
           </p>
-          {errors.name ? <p className={style.danger}>{errors.username}</p> : null}
           <p className={style.question}>
             <label>Life</label>
             <input

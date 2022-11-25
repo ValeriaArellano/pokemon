@@ -84,7 +84,7 @@ router.put("/:id", async (req, res) => {
     await exists.setTypes(types);
     return res.status(200).json({ info: "Pokemon edited!" });
   } catch (error) {
-    return res.status(400).json({ info: "Error when editing" });
+    return res.status(400).json({ info: "Error while editing" });
   }
 });
 
@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res) => {
     pokemonToDelete.destroy();
     return res.status(200).json({ info: "Pokemon deleted!" });
   } catch (error) {
-    return res.status(400).json({ info: "Error when deleting" });
+    return res.status(400).json({ info: "Error while deleting" });
   }
 });
 

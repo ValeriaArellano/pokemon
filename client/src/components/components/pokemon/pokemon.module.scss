@@ -1,291 +1,345 @@
-@import '../../../styles/variables.scss';
+@import "../../../styles/variables.scss";
 
 .container {
-    background-image: url("https://i.pinimg.com/originals/7c/67/8b/7c678bffd31dc92dc80d95d471b0e83d.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
+  background-image: url("https://i.pinimg.com/originals/7c/67/8b/7c678bffd31dc92dc80d95d471b0e83d.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  align-items: center;
+  text-align: center;
+  color: white;
+
+  .name_container {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    color: white;
-
-    .name_container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &__h1{
-        font-weight: 800;
-        font-size: 3.5em;
-        text-transform: uppercase;
-  
-        @include breakpoint(sm){
-          font-size: 1.5em;
-        }
-      }
-
-      &__input_name{
-        font-weight: 800;
-        font-size: 3.5em;
-        text-transform: uppercase;
-  
-        @include breakpoint(sm){
-          font-size: 1.5em;
-        }
-      }
-    }
 
     &__h1 {
       font-weight: 800;
       font-size: 3.5em;
       text-transform: uppercase;
 
-      @include breakpoint(sm){
+      @include breakpoint(sm) {
         font-size: 1.5em;
       }
     }
 
-    &__h2 {
-      letter-spacing: 10px;
-      font-size: 2em;
-      margin-right: 20px;
-
-      @include breakpoint(sm){
-        letter-spacing: 5px;
-        font-size: 1em;
-        margin-right: 0px;
-      }
-    }
-
-    .img {
-      display: flex;
-      //justify-content: space-evenly;
-      //margin: 0 500px;
-      justify-content: center;
-      align-items: center;
-
-      @include breakpoint(sm){
-        display: flex;
-        flex-direction: column;
-      }
-
-      img{
+    &__input_name {
+      font-weight: 800;
+      font-size: 3.5em;
+      text-transform: uppercase;
+      width: 500px;
+      background-color: transparent;
+      @include breakpoint(sm) {
         width: 200px;
-        height: 200px;
-
-        @include breakpoint(sm){
-          width: 150px;
-          height: 150px;
-        }
-      }
-      .parrafo {
-        color: black;
-        padding: 30px;
-        font-weight: 200;
-        text-transform: lowercase;
-      }
-    }
-
-    .type {
-      display: flex;
-      justify-content: space-around;
-      margin: 20px;
-      color: black;
-
-      @include breakpoint(sm){
-        font-size: 13px;
-      }
-
-      .grass {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          140deg,
-          rgba(196, 218, 61, 1) 0%,
-          rgba(110, 127, 14, 1) 69%,
-          rgba(39, 80, 9, 1) 100%
-        );
-      }
-
-      .normal {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #fdbb2d 0%, #3a1c71 100%);
-      }
-
-      .ground {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #fdbb2d 0%, #c08a53 100%);
-      }
-
-      .water {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(120deg, #1cb5e0 0%, #000851 100%);
-      }
-
-      .rock {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #fdbb2d 0%, #c08a53 100%);
-      }
-
-      .electric {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          90deg,
-          rgba(255, 222, 0, 1) 34%,
-          rgba(232, 255, 153, 1) 83%
-        );
-      }
-
-      .fire {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          0deg,
-          rgba(199, 24, 0, 1) 10%,
-          rgba(252, 194, 69, 1) 100%
-        );
-      }
-      
-      .psychic {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          140deg,
-          rgba(255, 167, 249, 1) 0%,
-          rgba(255, 44, 195, 1) 39%,
-          rgba(255, 227, 167, 1) 100%
-        );
-      }
-
-      .dark {
-        color: white;
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          20deg,
-          rgba(25, 25, 25, 1) 0%,
-          rgba(16, 11, 50, 1) 33%,
-          rgba(92, 2, 73, 1) 100%
-        );
-      }
-
-      .shadow {
-        color: white;
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          20deg,
-          rgba(25, 25, 25, 1) 0%,
-          rgba(16, 11, 50, 1) 33%,
-          rgba(92, 2, 73, 1) 100%
-        );
-      }
-
-      .poison {
-        color: white;
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          20deg,
-          rgba(92, 2, 73, 1) 0%,
-          rgba(16, 11, 50, 1) 33%,
-          rgba(25, 25, 25, 1) 0%
-        );
-      }
-      
-    .bug {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          140deg,
-          rgba(39, 80, 9, 1) 0%,
-          rgba(110, 127, 14, 1) 69%,
-          rgba(196, 218, 61, 1) 100%
-        );
-      }
-      
-    .ice {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          230deg,
-          rgba(202, 234, 246, 1) 0%,
-          rgba(160, 234, 241, 1) 46%,
-          rgba(111, 184, 235, 1) 100%
-        );
-      }
-    .ghost {
-        color: white;
-        width: 17%;
-        border-radius: 20px;
-        background: black;
-      }
-      
-    .steel {
-        color: white;
-        width: 17%;
-        border-radius: 20px;
-        background: #7b7b85;
-      }
-    .fairy {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(
-          45deg,
-          rgba(255, 230, 240, 1) 0%,
-          rgba(255, 197, 224, 1) 34%,
-          rgba(255, 166, 185, 1) 71%,
-          rgba(255, 138, 149, 1) 100%
-        );
-      }
-      
-    .flying {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #4d6c81 0%, #698ba5 100%);
-      }
-      
-    .dragon {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #44929e 0%, #5fd5e7 100%);
-      }
-      
-     .fighting {
-        width: 17%;
-        border-radius: 20px;
-        background: linear-gradient(110deg, #a34027 0%, #fb6537 100%);
-      }
-    }
-
-    meter {
-      width: 450px;
-      height: 50px;
-      margin: 10px 20px;
-
-      @include breakpoint(sm){
-        width: 150px;
-        height: 35px;
-        margin: 3px;
-      }
-      p {
-        font-weight: 800;
-        text-transform: uppercase;
-        
-        span {
-          font-weight: 600;
-        }
+        font-size: 1.5em;
       }
     }
   }
-  
 
-  
-  
-  
-  
+  &__h1 {
+    font-weight: 800;
+    font-size: 3.5em;
+    text-transform: uppercase;
+
+    @include breakpoint(sm) {
+      font-size: 1.5em;
+    }
+  }
+
+  &__h2 {
+    letter-spacing: 10px;
+    font-size: 2em;
+    margin-right: 20px;
+
+    @include breakpoint(sm) {
+      letter-spacing: 5px;
+      font-size: 1em;
+      margin-right: 0px;
+    }
+  }
+
+  .img {
+    display: flex;
+    //justify-content: space-evenly;
+    //margin: 0 500px;
+    justify-content: center;
+    align-items: center;
+
+    @include breakpoint(sm) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+
+      @include breakpoint(sm) {
+        width: 150px;
+        height: 150px;
+      }
+    }
+    .parrafo {
+      color: black;
+      padding: 30px;
+      font-weight: 200;
+      text-transform: lowercase;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .types_container {
+    width: 45%;
+    padding: 30px;
+
+    @include breakpoint(sm) {
+      width: 100%;
+    }
+    .types {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+
+      @include breakpoint(sm) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      input[type="checkbox"],
+      input[type="radio"] {
+        display: none;
+      }
+
+      label {
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      input[type="checkbox"]:checked + label {
+        background: rgba(255, 133, 12, 0.698);
+      }
+
+      input[type="checkbox"]:checked + label:hover {
+        background: rgba(253, 117, 6, 0.7);
+      }
+    }
+  }
+  .buttons {
+    margin: 20px;
+    padding: 0.6em 0.8em;
+    width: 100px;
+    background-color: $secondary;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 40px;
+
+    @include breakpoint(sm) {
+      align-self: center;
+    }
+  }
+
+  .type {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: black;
+
+    @include breakpoint(sm) {
+      font-size: 13px;
+      flex-direction: column;
+    }
+
+    .grass {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        140deg,
+        rgba(196, 218, 61, 1) 0%,
+        rgba(110, 127, 14, 1) 69%,
+        rgba(39, 80, 9, 1) 100%
+      );
+    }
+
+    .normal {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #fdbb2d 0%, #3a1c71 100%);
+    }
+
+    .ground {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #fdbb2d 0%, #c08a53 100%);
+    }
+
+    .water {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(120deg, #1cb5e0 0%, #000851 100%);
+    }
+
+    .rock {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #fdbb2d 0%, #c08a53 100%);
+    }
+
+    .electric {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 222, 0, 1) 34%,
+        rgba(232, 255, 153, 1) 83%
+      );
+    }
+
+    .fire {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        0deg,
+        rgba(199, 24, 0, 1) 10%,
+        rgba(252, 194, 69, 1) 100%
+      );
+    }
+
+    .psychic {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        140deg,
+        rgba(255, 167, 249, 1) 0%,
+        rgba(255, 44, 195, 1) 39%,
+        rgba(255, 227, 167, 1) 100%
+      );
+    }
+
+    .dark {
+      color: white;
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        20deg,
+        rgba(25, 25, 25, 1) 0%,
+        rgba(16, 11, 50, 1) 33%,
+        rgba(92, 2, 73, 1) 100%
+      );
+    }
+
+    .shadow {
+      color: white;
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        20deg,
+        rgba(25, 25, 25, 1) 0%,
+        rgba(16, 11, 50, 1) 33%,
+        rgba(92, 2, 73, 1) 100%
+      );
+    }
+
+    .poison {
+      color: white;
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        20deg,
+        rgba(92, 2, 73, 1) 0%,
+        rgba(16, 11, 50, 1) 33%,
+        rgba(25, 25, 25, 1) 0%
+      );
+    }
+
+    .bug {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        140deg,
+        rgba(39, 80, 9, 1) 0%,
+        rgba(110, 127, 14, 1) 69%,
+        rgba(196, 218, 61, 1) 100%
+      );
+    }
+
+    .ice {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        230deg,
+        rgba(202, 234, 246, 1) 0%,
+        rgba(160, 234, 241, 1) 46%,
+        rgba(111, 184, 235, 1) 100%
+      );
+    }
+    .ghost {
+      color: white;
+      width: 17%;
+      border-radius: 20px;
+      background: black;
+    }
+
+    .steel {
+      color: white;
+      width: 17%;
+      border-radius: 20px;
+      background: #7b7b85;
+    }
+    .fairy {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 230, 240, 1) 0%,
+        rgba(255, 197, 224, 1) 34%,
+        rgba(255, 166, 185, 1) 71%,
+        rgba(255, 138, 149, 1) 100%
+      );
+    }
+
+    .flying {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #4d6c81 0%, #698ba5 100%);
+    }
+
+    .dragon {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #44929e 0%, #5fd5e7 100%);
+    }
+
+    .fighting {
+      width: 17%;
+      border-radius: 20px;
+      background: linear-gradient(110deg, #a34027 0%, #fb6537 100%);
+    }
+  }
+
+  meter {
+    width: 450px;
+    height: 50px;
+    margin: 10px 20px;
+
+    @include breakpoint(sm) {
+      width: 150px;
+      height: 35px;
+      margin: 3px;
+    }
+    p {
+      font-weight: 800;
+      text-transform: uppercase;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+}
