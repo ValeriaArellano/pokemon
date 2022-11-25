@@ -86,13 +86,13 @@ export const Pokemon = () => {
     e.preventDefault()
     await axios.put(`https://pokemonnnnn.fly.dev/pokemons/edit/${id}`, data).then((response) => {
       console.log(response.data)
-      if(response.data.info === 'Pokemon edited!'){
-        showToast('success', response.data.info)
-        dispatch(getPokemons());
-        setEdit(false)
-      }else{
-        showToast('danger', response.data.info)
-      }
+      // if(response.data.info === 'Pokemon edited!'){
+      //   showToast('success', response.data.info)
+      //   dispatch(getPokemons());
+      //   setEdit(false)
+      // }else{
+      //   showToast('danger', response.data.info)
+      // }
       setData({
         name: "",
         life: '',
@@ -102,10 +102,9 @@ export const Pokemon = () => {
         height: '',
         weight: '',
         types: [],
-        img: "",
-        idPoke: id
+        img: ""
       });
-      
+      setEdit(false)
     }
     ).catch(e => console.log(e.response))
    

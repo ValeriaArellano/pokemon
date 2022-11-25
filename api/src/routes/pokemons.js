@@ -73,12 +73,10 @@ router.put("/edit/:id", async (req, res) => {
     try {
 
       const { id } = req.params;
-  console.log(id)
-  let { name, life, strength, defense, speed, height, weight, types, img, idPoke } =
+  let { name, life, strength, defense, speed, height, weight, types, img } =
     req.body;
 
       const exists = await Pokemon.findOne({ where: { id: id } });
-      console.log(exists)
 
       console.log(req.body)
 
@@ -92,15 +90,17 @@ router.put("/edit/:id", async (req, res) => {
           weight: weight ? parseInt(weight) : exists.weight,
           img: img ? img : exists.img
         },
-        { where: { idPoke: id } }
+        { where: { id: id } }
         );
 
         if (!types.length) {
           types = [1]
-        };
+        }else{
+          console.log(types)
+          await pokemon.setTypes(types);
+        }
 
-        await pokemon.setTypes(types);
-        console.log(pokemon) 
+        
         res.status(200).json({ info: "Pokemon edited!", pokemon: pokemon})
     } catch (error) {
       res.status(400).json(error)

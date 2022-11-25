@@ -17,7 +17,7 @@ export const getTypes = () => async (dispatch) => {
       payload: data,
     });
   };
-  
+
   export const getByName = (name) => async (dispatch) => {
     const response = await fetch(
       `https://pokemonnnnn.fly.dev/pokemons?name=${name}`
