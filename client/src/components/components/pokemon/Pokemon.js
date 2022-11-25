@@ -81,7 +81,7 @@ export const Pokemon = () => {
           history.push("/home");
         }
       }).catch(e=>{
-        showToast("danger", e.response.data.info);
+        console.log(e)
       });
     }
   };
@@ -141,7 +141,7 @@ export const Pokemon = () => {
         });
         setEdit(false);
       })
-      .catch((e) => showToast("danger", e));
+      .catch((e) => console.log(e));
   };
 
   
