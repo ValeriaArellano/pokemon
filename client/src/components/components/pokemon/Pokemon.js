@@ -16,16 +16,15 @@ export const Pokemon = () => {
 
   const [data, setData] = useState({
     name: "",
-    life: '',
-    strength: '',
-    defense: '',
-    speed: '',
-    height: '',
-    weight: '',
-    types: [],
+    life: "",
+    strength: "",
+    defense: "",
+    speed: "",
+    height: "",
+    weight: "",
+    type: [],
     img: "",
   });
-
 
   const [list, setList] = useState([]);
   let toastProperties = null;
@@ -47,6 +46,14 @@ export const Pokemon = () => {
           backgroundColor: "#d9534f",
         };
         break;
+        case "warning":
+        toastProperties = {
+          id: list.length + 1,
+          title: "Warning",
+          description: description,
+          backgroundColor: "#f2cb07",
+        };
+        break
       default:
         toastProperties = [];
     }
@@ -55,7 +62,7 @@ export const Pokemon = () => {
 
   useEffect(() => {
     async function detalles() {
-      const data = await fetch(`https://pokemonnnnn.fly.dev/pokemons/${id}`);
+      const data = await fetch(`http://localhost:8080/pokemons/${id}`);
       const pokemon = await data.json();
       setPokemon(pokemon);
     }
@@ -74,15 +81,18 @@ export const Pokemon = () => {
     if (Number(id)) {
       return alert("This pokemon can't be deleted");
     } else {
-      axios.delete(`https://pokemonnnnn.fly.dev/pokemons/${id}`).then((response) => {
-        console.log(response.data);
-        if (response.data.info === "Pokemon deleted!") {
-          showToast("success", response.data.info);
-          history.push("/home");
-        }
-      }).catch(e=>{
-        console.log(e)
-      });
+      axios
+        .delete(`http://localhost:8080/pokemons/${id}`)
+        .then((response) => {
+          if (response.data.info) {
+            showToast("success", response.data.info);
+            history.push("/home");
+            window.location.reload()
+          }
+        })
+        .catch((e) => {
+          showToast("danger", e.message);
+        });
     }
   };
 
@@ -92,7 +102,7 @@ export const Pokemon = () => {
         ...data,
         [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
       });
-    } else {
+    }else {
       setData({
         ...data,
         [e.target.name]: e.target.value,
@@ -101,33 +111,34 @@ export const Pokemon = () => {
   };
 
   const checkbox = (e) => {
-    if (data.types.includes(e.target.value)) {
-      data.types = data.types.filter((id) => id !== e.target.value);
+    if (data.type.includes(e.target.value)) {
+      data.type = data.type.filter((id) => id !== e.target.value);
       setData({
         ...data,
-        types: data.types,
+        type: data.type,
       });
     } else {
       setData({
         ...data,
-        types: [...data.types, e.target.value],
+        type: [...data.type, e.target.value],
       });
     }
   };
 
   const saveChanges = async (e) => {
     e.preventDefault();
+    if(Object.values(data).every(x => x === '' || x.length === 0)){
+      return showToast("warning", 'nothing to change');
+    }
     await axios
-      .put(`https://pokemonnnnn.fly.dev/pokemons/${id}`, data)
+      .put(`http://localhost:8080/pokemons/${id}`, data)
       .then((response) => {
-        console.log(response.data);
-        if (response.data.info === "Pokemon edited!") {
-          showToast("success", response.data.info);
+        if (response.data.info) {
+          showToast("danger", response.data.info);
           setEdit(false);
           window.location.reload();
-        } 
-          
-        
+        }
+
         setData({
           name: "",
           life: "",
@@ -136,15 +147,13 @@ export const Pokemon = () => {
           speed: "",
           height: "",
           weight: "",
-          types: [],
+          type: [],
           img: "",
         });
         setEdit(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => showToast('danger', e.response.data.error));
   };
-
-  
 
   return (
     <>
@@ -163,10 +172,17 @@ export const Pokemon = () => {
               />
             </div>
             <div className={style.img}>
-              <div style={{marginTop: '15px',cursor: 'pointer', display: 'flex', flexDirection: 'column'}}>
+              <div
+                style={{
+                  marginTop: "15px",
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 {changeImg ? (
                   <input
-                  style={{backgroundColor: 'transparent'}}
+                    style={{ backgroundColor: "transparent" }}
                     type="text"
                     name="img"
                     placeholder="image link"
@@ -175,7 +191,7 @@ export const Pokemon = () => {
                   />
                 ) : null}
                 <img
-                 onClick={() => setChangeImg(!changeImg)}
+                  onClick={() => setChangeImg(!changeImg)}
                   src={
                     data.img
                       ? data.img
@@ -190,8 +206,16 @@ export const Pokemon = () => {
                 <p>
                   weight:
                   <input
-                  style={{backgroundColor: 'transparent', width: '30%'}}
+                    style={{
+                      backgroundColor: "transparent",
+                      width: "30%",
+                      border: "0px",
+                      outline: "none",
+                      boxShadow: "none",
+                      color: "black",
+                    }}
                     type="number"
+                    placeholder={pokemon.weight}
                     name="weight"
                     value={data.weight}
                     onChange={(e) => handleInputChange(e)}
@@ -201,10 +225,18 @@ export const Pokemon = () => {
                 <p>
                   height:
                   <input
-                  style={{backgroundColor: 'transparent', width: '30%'}}
+                    style={{
+                      backgroundColor: "transparent",
+                      width: "30%",
+                      border: "0px",
+                      outline: "none",
+                      boxShadow: "none",
+                      color: "black",
+                    }}
                     type="number"
                     name="height"
                     value={data.height}
+                    placeholder={pokemon.height}
                     onChange={(e) => handleInputChange(e)}
                   />
                   ft
@@ -232,53 +264,66 @@ export const Pokemon = () => {
               </div>
             </div>
             <div className={style.meter}>
-              <div className={style.type}>
-              <p>
-                  life:
-                <input
-                  type="number"
-                  name="life"
-                  value={data.life}
-                  onChange={(e) => handleInputChange(e)}
-                />
-                </p>
-                <p>
-                  strength:
-                <input
+              <div className={style.meter__types}>
+                <div className={style.meter__types__input_container}>
+                  <label htmlFor="life">life: </label>
+                  <input
+                    type="number"
+                    name="life"
+                    value={data.life}
+                    placeholder={pokemon.life}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                </div>
+                <div className={style.meter__types__input_container}>
+                  <label htmlFor="strength">Strength: </label>
+                  <input
                   type="number"
                   name="strength"
+                  placeholder={pokemon.strength}
                   value={data.strength}
                   onChange={(e) => handleInputChange(e)}
                 />
-                </p>
+                </div>
               </div>
-              <div className={style.type}>
-              <p>
-                  defense:
-                <input
-                  type="number"
-                  name="defense"
-                  value={data.defense}
-                  onChange={(e) => handleInputChange(e)}
-                />
-                </p>
-                <p>
-                  speed:
-                <input
-                  type="number"
-                  name="speed"
-                  value={data.speed}
-                  onChange={(e) => handleInputChange(e)}
-                />
-                </p>
+              <div className={style.meter__types}>
+                <div className={style.meter__types__input_container}>
+                  <label htmlFor="defense">Defense: </label>
+                  <input
+                    type="number"
+                    name="defense"
+                    placeholder={pokemon.defense}
+                    value={data.defense}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                </div>
+                <div className={style.meter__types__input_container}>
+                  <label htmlFor="speed">Speed: </label>
+                  <input
+                    type="number"
+                    name="speed"
+                    placeholder={pokemon.speed}
+                    value={data.speed}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                </div>
               </div>
 
-              <button onClick={() => setEdit(false)} className={style.buttons}>Cancel</button>
-            <button onClick={(e) => saveChanges(e)} className={style.buttons}>Save</button>
-
-             
+              <div style={{ display: "flex", justifyContent: 'center' }}>
+                <button
+                  onClick={() => setEdit(false)}
+                  className={style.buttons}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={(e) => saveChanges(e)}
+                  className={style.buttons}
+                >
+                  Save
+                </button>
+              </div>
             </div>
-           
           </form>
           <Toast toastlist={list} position="buttom-right" setList={setList} />
         </>
@@ -303,15 +348,15 @@ export const Pokemon = () => {
               </div>
             </div>
 
-            <div className={style.type}>
+            <div className={style.typee}>
               {pokemon.type
-                ? pokemon?.type.map((t) => (
-                    <h3 className={style[`${t}`]}>{t}</h3>
+                ? pokemon.type.map((t) => (
+                    <h3 key={t} className={style[`${t}`]}>{t}</h3>
                   ))
                 : null}
             </div>
-            <div className={style.meter}>
-              <div className={style.type}>
+            <div className={style.meterr}>
+              <div className={style.meterr__types}>
                 <Stats valor={pokemon.life} nombre={"Life"} />
                 <Stats valor={pokemon.strength} nombre={"Strength"} />
               </div>
@@ -320,8 +365,12 @@ export const Pokemon = () => {
                 <Stats valor={pokemon.speed} nombre={"Speed"} />
               </div>
             </div>
-            <button onClick={() => editPokemon()} className={style.buttons}>Edit</button>
-            <button onClick={() => deletePokemon()} className={style.buttons}>Delete</button>
+            <button onClick={() => editPokemon()} className={style.buttons}>
+              Edit
+            </button>
+            <button onClick={() => deletePokemon()} className={style.buttons}>
+              Delete
+            </button>
           </div>
         </>
       )}

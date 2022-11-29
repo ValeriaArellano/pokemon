@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "../../../redux/actions";
 import Toast from "../toast/Toast";
 import style from "./form.module.scss";
+import axios from 'axios';
 
 export const Form = () => {
   const dispatch = useDispatch();
   const options = useSelector((store) => store.types);
+  const [error, setError] = useState('');
 
   const [list, setList] = useState([]);
   let toastProperties = null;
@@ -47,6 +49,14 @@ export const Form = () => {
   });
 
   const handleInputChange = (e) => {
+
+    if(e.target.name === "name"){
+      if(!e.target.value){
+       setError("The name is required")
+      }else{
+        setError('')
+      }
+    }
     if (e.target.name !== "name" && e.target.name !== "img") {
       setData({
         ...data,
@@ -77,34 +87,25 @@ export const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const crear = await fetch("https://pokemonnnnn.fly.dev/pokemons", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    dispatch(getPokemons());
-    const respuesta = await crear.json();
-    console.log(respuesta);
-    setData({
-      name: "",
-      life: '',
-      strength:'',
-      defense: '',
-      speed: '',
-      height: '',
-      weight: '',
-      types: [],
-      img: ""
-    });
-
-    if(respuesta.info === 'Pokemon created!'){
-      showToast('success', respuesta.info)
-    }else{
-      showToast('danger', respuesta.info)
-    }
+    await axios.post("http://localhost:8080/pokemons", data).then((response) => {
+      if(response.data.info){
+        showToast('success', response.data.info)
+        dispatch(getPokemons());
+        setData({
+          name: "",
+          life: '',
+          strength:'',
+          defense: '',
+          speed: '',
+          height: '',
+          weight: '',
+          types: [],
+          img: ""
+        });
+      }
+    }).catch((e) => {
+      showToast('danger', e.response.data.error)
+    })
   };
 
   return (
@@ -112,12 +113,14 @@ export const Form = () => {
       <form action="POST" className={style.form} onSubmit={submit}>
         <div className={style.form__inputs_container}>
           <h1>Create your own Pokemon</h1>
+          {error && <p style={{backgroundColor: 'red', borderRadius: '60px', color: 'white'}}>{error}</p>}
           <p className={style.question}>
             <label>Pokemon name</label>
             <input
               type="text"
               name="name"
               value={data.name}
+              onBlur={(e) => !e.target.value ? setError('The name is required') : ''}
               onChange={handleInputChange}
               required
             />

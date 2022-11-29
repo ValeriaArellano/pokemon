@@ -1,5 +1,5 @@
 export const tipos = (type, array) => {
-    if (array.length) return array.filter((p) => p.type.includes(type));
+    if (array.length) return array.filter((p) => p.type.includes(type))
     return [];
   };
   

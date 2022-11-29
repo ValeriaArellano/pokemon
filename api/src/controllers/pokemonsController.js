@@ -102,7 +102,7 @@ const forId = async (id) => {
 
     return pokemonId;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   try {
     const db = await Pokemon.findByPk(id, { include: Type });
@@ -121,12 +121,89 @@ const forId = async (id) => {
 
     return pokemonDb;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
+
+const createPokemon = async (req, res) => {
+  let { name, life, strength, defense, speed, height, weight, types, img } =
+    req.body;
+  if (!name) {
+    throw new Error("The name is required")
+  } else if(/\d/.test(name)){
+    throw new Error("The name can\'t contain a number")
+  }else{
+    const exists = await Pokemon.findOne({ where: { name: name } });
+    if (exists) throw new Error("Pokemon already exists!")
+  }
+
+  try {
+    const pokemon = await Pokemon.create({
+      name: name.toLowerCase(),
+      life: Number(life),
+      strength: Number(strength),
+      defense: Number(defense),
+      speed: Number(speed),
+      height: Number(height),
+      weight: Number(weight),
+      img: img,
+    });
+  
+    if (types.length) {
+      await pokemon.setTypes(types);
+      return "Pokemon created!"
+      
+    }else{
+      types = [1];
+      await pokemon.setTypes(types);
+      return 'pokemon created!'
+    }
+    
+
+  } catch (error) {
+    return error
+  }
+};
+
+const updatePokemon = async (req, res) => {
+  const { id } = req.params;
+  let { name, life, strength, defense, speed, height, weight, img } =
+    req.body;
+
+  if(/\d/.test(name)){
+    throw new Error("The name can\'t contain a number")
+  }
+
+try {
+  const exists = await Pokemon.findByPk(id);
+  await exists.update({
+    name: name ? name.toLowerCase() : exists.name,
+    life: life ? parseInt(life) : exists.life,
+    strength: strength ? parseInt(strength) : exists.strength,
+    defense: defense ? parseInt(defense) : exists.defense,
+    speed: speed ? parseInt(speed) : exists.speed,
+    height: height ? parseInt(height) : exists.height,
+    weight: weight ? parseInt(weight) : exists.weight,
+    img: img ? img : exists.img
+  },
+  );
+
+  if(req.body.type.length){
+    await exists.setTypes(req.body.type);
+  }
+
+  return "Pokemon edited!"
+} catch (error) {
+  console.log(error)
+  throw new Error('Error while editing')
+}
+}
+
 
 module.exports = {
   info,
   forName,
   forId,
+  createPokemon,
+  updatePokemon
 };

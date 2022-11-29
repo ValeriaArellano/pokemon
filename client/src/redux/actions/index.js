@@ -1,5 +1,5 @@
 export const getTypes = () => async (dispatch) => {
-    const response = await fetch("https://pokemonnnnn.fly.dev/types");
+    const response = await fetch("http://localhost:8080/types");
     console.log(response);
     const data = await response.json();
     console.log(data);
@@ -10,7 +10,7 @@ export const getTypes = () => async (dispatch) => {
   };
   
   export const getPokemons = () => async (dispatch) => {
-    const response = await fetch(`https://pokemonnnnn.fly.dev/pokemons`);
+    const response = await fetch(`http://localhost:8080/pokemons`);
     const data = await response.json();
     dispatch({
       type: "GET_POKEMONS",
@@ -21,7 +21,7 @@ export const getTypes = () => async (dispatch) => {
 
   export const getByName = (name) => async (dispatch) => {
     const response = await fetch(
-      `https://pokemonnnnn.fly.dev/pokemons?name=${name}`
+      `http://localhost:8080/pokemons?name=${name}`
     );
     const data = await response.json();
     dispatch({
@@ -32,7 +32,7 @@ export const getTypes = () => async (dispatch) => {
   
   export const filters = (num) => async (dispatch) => {
     const response = await fetch(
-      `https://pokemonnnnn.fly.dev/pokemons?by=${num}`
+      `http://localhost:8080/pokemons?by=${num}`
     );
     const data = await response.json();
     dispatch({
@@ -42,6 +42,7 @@ export const getTypes = () => async (dispatch) => {
   };
   
   export const type = (type) => (dispatch) => {
+    console.log(type)
     dispatch({
       type: "BY_TYPE",
       payload: type,
