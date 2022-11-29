@@ -1,5 +1,7 @@
+import { BASE_URL } from "../../config";
+
 export const getTypes = () => async (dispatch) => {
-    const response = await fetch("http://localhost:8080/types");
+    const response = await fetch(`${BASE_URL}/types`);
     console.log(response);
     const data = await response.json();
     console.log(data);
@@ -10,7 +12,7 @@ export const getTypes = () => async (dispatch) => {
   };
   
   export const getPokemons = () => async (dispatch) => {
-    const response = await fetch(`http://localhost:8080/pokemons`);
+    const response = await fetch(`${BASE_URL}/pokemons`);
     const data = await response.json();
     dispatch({
       type: "GET_POKEMONS",
@@ -21,7 +23,7 @@ export const getTypes = () => async (dispatch) => {
 
   export const getByName = (name) => async (dispatch) => {
     const response = await fetch(
-      `http://localhost:8080/pokemons?name=${name}`
+      `${BASE_URL}/pokemons?name=${name}`
     );
     const data = await response.json();
     dispatch({
@@ -32,7 +34,7 @@ export const getTypes = () => async (dispatch) => {
   
   export const filters = (num) => async (dispatch) => {
     const response = await fetch(
-      `http://localhost:8080/pokemons?by=${num}`
+      `${BASE_URL}/pokemons?by=${num}`
     );
     const data = await response.json();
     dispatch({

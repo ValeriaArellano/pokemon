@@ -5,6 +5,7 @@ import Stats from "../../components/stats/index";
 import { useSelector } from "react-redux";
 import Toast from "../toast/Toast";
 import axios from "axios";
+import { BASE_URL } from "../../../config";
 
 export const Pokemon = () => {
   const { id } = useParams();
@@ -62,7 +63,7 @@ export const Pokemon = () => {
 
   useEffect(() => {
     async function detalles() {
-      const data = await fetch(`http://localhost:8080/pokemons/${id}`);
+      const data = await fetch(`${BASE_URL}/pokemons/${id}`);
       const pokemon = await data.json();
       setPokemon(pokemon);
     }
@@ -82,7 +83,7 @@ export const Pokemon = () => {
       return alert("This pokemon can't be deleted");
     } else {
       axios
-        .delete(`http://localhost:8080/pokemons/${id}`)
+        .delete(`${BASE_URL}/pokemons/${id}`)
         .then((response) => {
           if (response.data.info) {
             showToast("success", response.data.info);
@@ -131,7 +132,7 @@ export const Pokemon = () => {
       return showToast("warning", 'nothing to change');
     }
     await axios
-      .put(`http://localhost:8080/pokemons/${id}`, data)
+      .put(`${BASE_URL}/pokemons/${id}`, data)
       .then((response) => {
         if (response.data.info) {
           showToast("danger", response.data.info);

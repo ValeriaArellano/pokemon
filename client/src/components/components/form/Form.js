@@ -4,6 +4,7 @@ import { getPokemons } from "../../../redux/actions";
 import Toast from "../toast/Toast";
 import style from "./form.module.scss";
 import axios from 'axios';
+import { BASE_URL } from "../../../config";
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -87,7 +88,7 @@ export const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/pokemons", data).then((response) => {
+    await axios.post(`${BASE_URL}/pokemons`, data).then((response) => {
       if(response.data.info){
         showToast('success', response.data.info)
         dispatch(getPokemons());
