@@ -3,7 +3,7 @@ import style from "./search.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { filters, getByName, sort, type } from "../../../redux/actions";
 
-export const Search = () => {
+export const Search = ({ setCurrentPage }) => {
   const dispatch = useDispatch();
   const [pokemons, setPokemons] = useState("");
 
@@ -15,6 +15,7 @@ export const Search = () => {
 
   const byTipe = (e) => {
     dispatch(type(e.target.value));
+    setCurrentPage(1)
   };
 
   const submit = (e) => {

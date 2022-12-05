@@ -114,7 +114,7 @@ export const Pokedex = () => {
   return (
     <div className={style.container}>
       <div className={style.search_container}>
-        <Search />
+        <Search setCurrentPage={setCurrentPage}/>
       </div>
 
       {pokemons.length ? (
