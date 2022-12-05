@@ -2,7 +2,7 @@ const axios = require("axios");
 const { Pokemon, Type } = require("../db.js");
 
 const info = async (by) => {
-  const api = await axios("https://pokeapi.co/api/v2/pokemon?limit=100");
+  const api = await axios("https://pokeapi.co/api/v2/pokemon?limit=40");
   const data = await api.data;
   const db = await Pokemon.findAll({ include: Type });
 
