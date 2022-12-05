@@ -17,7 +17,7 @@ export const Pokedex = () => {
   const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
   const [currentItems, setCurrentItems] = useState([])
   const [pageNumberLimit, setPageNumberLimit] = useState(3);
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(2);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   
@@ -86,10 +86,8 @@ export const Pokedex = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onClick={handleNextbtn}
       >
-        {" "}
-        &hellip;{" "}
+        ...
       </li>
     );
   }
@@ -103,10 +101,8 @@ export const Pokedex = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onClick={handlePrevbtn}
       >
-        {" "}
-        &hellip;{" "}
+        ...
       </li>
     );
   }
