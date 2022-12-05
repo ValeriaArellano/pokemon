@@ -62,12 +62,12 @@ export const Pokemon = () => {
   };
 
   useEffect(() => {
-    async function detalles() {
+    async function details() {
       const data = await fetch(`${BASE_URL}/pokemons/${id}`);
       const pokemon = await data.json();
       setPokemon(pokemon);
     }
-    detalles();
+    details();
   }, [id]);
 
   const editPokemon = () => {

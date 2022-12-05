@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
       return res.status(200).json(pokemonInfo);
     }
     pokemonInfo = await info(by);
-    if (!pokemonInfo.length) return res.json({ info: "No hay mas registros" });
+    if (!pokemonInfo.length) return res.json({ info: "There are no more pokemon" });
     res.json(pokemonInfo);
   } catch (error) {
     return res.status(400).json({ info: error });
@@ -33,23 +33,20 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const pokemonInfo = await forId(id);
-    if (!pokemonInfo.id) return res.json({ info: "No se encontro el pokemon" });
-    res.json(pokemonInfo);
+    if (!pokemonInfo.id) return res.status(400).json({ info: "No se encontro el pokemon" });
+    res.status(200).json(pokemonInfo);
   } catch (error) {
     res.status(400).json({ info: 'Error del servidor' });
   }
 });
 
 router.post("/", async (req, res) => {
-  
   try {
     const response = await createPokemon(req, res)
     return res.status(200).json({info: response})
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-  
-  
 });
 
 router.put("/:id", async (req, res) => {

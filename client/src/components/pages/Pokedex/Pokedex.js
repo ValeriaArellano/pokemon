@@ -18,7 +18,7 @@ export const Pokedex = () => {
   const pagination = () => {
     console.log(pokemons)
     if (pokemons.length > 12) return pokemons.slice(page, page + 12);
-    if (pokemons.length < 12) return pokemons
+    if (pokemons.length <= 12) return pokemons
     //if (pokemons.info) return pokemons
     return [];
   };
